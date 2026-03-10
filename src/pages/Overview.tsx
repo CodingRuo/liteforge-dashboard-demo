@@ -55,10 +55,6 @@ export const Overview = createComponent({
   component({ use }) {
     const router = use<Router>('router');
 
-    function navTo(s: ServerMetrics) {
-      router.navigate(`/servers/${s.id}`);
-    }
-
     return (
       <div class="pt-12 min-h-screen bg-[#0d0d0d]">
         <div class="p-4 space-y-4">
@@ -156,12 +152,12 @@ export const Overview = createComponent({
                 </thead>
                 <tbody>
                   {For({
-                    each: dashboardStore.servers(),
+                    each: () => dashboardStore.servers(),
                     children: (s) => (
                       <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
                         <td
                           class="px-4 py-3 text-white hover:text-[#00C49A] transition-colors cursor-pointer font-medium"
-                          onclick={() => navTo(s)}
+                          onclick={() => router.navigate(`/servers/${s.id}`)}
                         >
                           {s.name}
                         </td>
