@@ -11,12 +11,15 @@ importers:
       '@liteforge/router':
         specifier: ^0.8.0
         version: 0.8.0(@liteforge/core@0.1.0)
+      '@liteforge/runtime':
+        specifier: 0.6.4
+        version: 0.6.4(@liteforge/core@0.1.0)
       '@liteforge/store':
         specifier: ^0.1.0
         version: 0.1.0(@liteforge/core@0.1.0)
       '@liteforge/toast':
         specifier: ^2.0.0
-        version: 2.0.0(@liteforge/core@0.1.0)(@liteforge/runtime@0.6.3(@liteforge/core@0.1.0))
+        version: 2.0.0(@liteforge/core@0.1.0)(@liteforge/runtime@0.6.4(@liteforge/core@0.1.0))
       '@liteforge/vite-plugin':
         specifier: ^0.4.4
         version: 0.4.4(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))
@@ -293,6 +296,12 @@ packages:
 
   '@liteforge/runtime@0.6.3':
     resolution: {integrity: sha512-cn2azOg0SQQhf02JPhPgKV9d8km6IikJq9tHnX14vZ5SqDd/DM0HcuTy+WgtpQpWKmyCr3L/v1Eb0EHRZnJXpw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@liteforge/core': '>=0.1.0'
+
+  '@liteforge/runtime@0.6.4':
+    resolution: {integrity: sha512-JgESSi/PIVt9eoGQZnIXPbMRZq4NsCYF4A2Qn/3IWMtE2yteVnlWnC794/Xg6vn67P6Jvj4R3i32mp4AGdYORw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@liteforge/core': '>=0.1.0'
@@ -1012,15 +1021,19 @@ snapshots:
     dependencies:
       '@liteforge/core': 0.1.0
 
+  '@liteforge/runtime@0.6.4(@liteforge/core@0.1.0)':
+    dependencies:
+      '@liteforge/core': 0.1.0
+
   '@liteforge/store@0.1.0(@liteforge/core@0.1.0)':
     dependencies:
       '@liteforge/core': 0.1.0
 
-  '@liteforge/toast@2.0.0(@liteforge/core@0.1.0)(@liteforge/runtime@0.6.3(@liteforge/core@0.1.0))':
+  '@liteforge/toast@2.0.0(@liteforge/core@0.1.0)(@liteforge/runtime@0.6.4(@liteforge/core@0.1.0))':
     dependencies:
       '@liteforge/core': 0.1.0
     optionalDependencies:
-      '@liteforge/runtime': 0.6.3(@liteforge/core@0.1.0)
+      '@liteforge/runtime': 0.6.4(@liteforge/core@0.1.0)
 
   '@liteforge/vite-plugin@0.4.4(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
