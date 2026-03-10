@@ -1,6 +1,6 @@
 import { createComponent } from 'liteforge';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
-import { getActiveRouter } from 'liteforge/router';
+import { getActiveRouter } from '@liteforge/router';
 
 const SERVER_COLORS: Record<string, string> = {
   s1: '#00C49A', s2: '#60a5fa', s3: '#f59e0b', s4: '#a78bfa', s5: '#f472b6',

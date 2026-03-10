@@ -1,5 +1,5 @@
 import { createComponent } from 'liteforge';
-import { Link, useParam } from 'liteforge/router';
+import { Link, useParam } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
 import { AreaChart } from '../components/AreaChart.js';

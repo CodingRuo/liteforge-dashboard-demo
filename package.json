@@ -10,8 +10,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@liteforge/router": "^0.8.0",
+    "@liteforge/store": "^0.1.0",
     "@liteforge/toast": "^2.0.0",
-    "liteforge": "^0.4.2",
+    "@liteforge/vite-plugin": "^0.4.3",
+    "liteforge": "^0.7.2",
     "zod": "^3.24.0"
   },
   "devDependencies": {
