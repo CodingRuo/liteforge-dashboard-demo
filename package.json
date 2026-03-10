@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@liteforge/router": "^0.8.0",
-    "@liteforge/runtime": "0.6.4",
+    "@liteforge/runtime": "0.6.5",
     "@liteforge/store": "^0.1.0",
     "@liteforge/toast": "^2.0.0",
     "@liteforge/vite-plugin": "^0.4.4",
