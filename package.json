@@ -15,7 +15,7 @@
     "@liteforge/store": "^0.1.0",
     "@liteforge/toast": "^2.0.0",
     "@liteforge/vite-plugin": "^0.4.5",
-    "liteforge": "^0.7.2",
+    "liteforge": "^0.7.6",
     "zod": "^3.24.0"
   },
   "devDependencies": {

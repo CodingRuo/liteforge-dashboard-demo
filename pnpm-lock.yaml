@@ -24,8 +24,8 @@ importers:
         specifier: ^0.4.5
         version: 0.4.5(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))
       liteforge:
-        specifier: ^0.7.2
-        version: 0.7.2
+        specifier: ^0.7.6
+        version: 0.7.6
       zod:
         specifier: ^3.24.0
         version: 3.25.76
@@ -290,12 +290,6 @@ packages:
 
   '@liteforge/router@0.8.0':
     resolution: {integrity: sha512-6bV5MxRylB+pJkqBbwQbZdKugpVNIFwj00Pn5mjb/Thu6EOgI9vKcmBzMnS0G1FXTooYXm5M28Febrabfbb40Q==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@liteforge/core': '>=0.1.0'
-
-  '@liteforge/runtime@0.6.3':
-    resolution: {integrity: sha512-cn2azOg0SQQhf02JPhPgKV9d8km6IikJq9tHnX14vZ5SqDd/DM0HcuTy+WgtpQpWKmyCr3L/v1Eb0EHRZnJXpw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@liteforge/core': '>=0.1.0'
@@ -699,8 +693,8 @@ packages:
     resolution: {integrity: sha512-l51N2r93WmGUye3WuFoN5k10zyvrVs0qfKBhyC5ogUQ6Ew6JUSswh78mbSO+IU3nTWsyOArqPCcShdQSadghBQ==}
     engines: {node: '>= 12.0.0'}
 
-  liteforge@0.7.2:
-    resolution: {integrity: sha512-ipp1v7aZgb++x6OCv6C1wzId4VJHUfL2N3AdZ3JL2SpHExD/KXbrKySsBvfE/osUCns28McggoyHVwameiKyWw==}
+  liteforge@0.7.6:
+    resolution: {integrity: sha512-bdgUS2beMbnI94GsSkhWM/6Qp3nM966ItQuAB2GfJm9bnyPFdcyYQ2tOKHHFGK50XC+YMHvwieTlWFLyn1vZKw==}
     engines: {node: '>=18'}
 
   lru-cache@5.1.1:
@@ -1017,10 +1011,6 @@ snapshots:
     dependencies:
       '@liteforge/core': 0.1.0
 
-  '@liteforge/runtime@0.6.3(@liteforge/core@0.1.0)':
-    dependencies:
-      '@liteforge/core': 0.1.0
-
   '@liteforge/runtime@0.6.6(@liteforge/core@0.1.0)':
     dependencies:
       '@liteforge/core': 0.1.0
@@ -1317,10 +1307,10 @@ snapshots:
       lightningcss-win32-arm64-msvc: 1.31.1
       lightningcss-win32-x64-msvc: 1.31.1
 
-  liteforge@0.7.2:
+  liteforge@0.7.6:
     dependencies:
       '@liteforge/core': 0.1.0
-      '@liteforge/runtime': 0.6.3(@liteforge/core@0.1.0)
+      '@liteforge/runtime': 0.6.6(@liteforge/core@0.1.0)
 
   lru-cache@5.1.1:
     dependencies:
