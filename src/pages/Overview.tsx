@@ -1,6 +1,6 @@
-import { createComponent } from 'liteforge';
+import { createComponent, use } from 'liteforge';
 import { For } from 'liteforge';
-import { getActiveRouterOrNull } from '@liteforge/router';
+import type { Router } from '@liteforge/router';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
 import { AreaChart } from '../components/AreaChart.js';
@@ -52,13 +52,13 @@ function formatUptime(seconds: number): string {
 
 export const Overview = createComponent({
   name: 'Overview',
-  component() {
-    // DEBUG
-    console.log('globalRequests:', dashboardStore.globalRequests());
-    console.log('simulating:', dashboardStore.simulating());
-    setTimeout(() => {
-      console.log('globalRequests after 2s:', dashboardStore.globalRequests());
-    }, 2000);
+  component({ use }) {
+    const router = use<Router>('router');
+
+    function navTo(s: ServerMetrics) {
+      router.navigate(`/servers/${s.id}`);
+    }
+
     return (
       <div class="pt-12 min-h-screen bg-[#0d0d0d]">
         <div class="p-4 space-y-4">
@@ -156,12 +156,12 @@ export const Overview = createComponent({
                 </thead>
                 <tbody>
                   {For({
-                    each: () => dashboardStore.servers(),
+                    each: dashboardStore.servers(),
                     children: (s) => (
                       <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
                         <td
                           class="px-4 py-3 text-white hover:text-[#00C49A] transition-colors cursor-pointer font-medium"
-                          onclick={() => getActiveRouterOrNull()?.navigate(`/servers/${s.id}`)}
+                          onclick={() => navTo(s)}
                         >
                           {s.name}
                         </td>
