@@ -1,0 +1,18 @@
+import { createApp } from 'liteforge';
+import { createBrowserHistory, createRouter } from 'liteforge/router';
+import { App } from './App.js';
+import { routes } from './router.js';
+import { simulation } from './services/simulation.js';
+import './styles.css';
+
+const history = createBrowserHistory();
+const router = createRouter({
+  routes,
+  history,
+  titleTemplate: t => t ?? 'LiteForge Dashboard',
+});
+
+await createApp({ root: App, target: '#app', router }).mount();
+
+// Start simulation after app mounts
+simulation.start();
