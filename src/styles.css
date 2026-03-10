@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Safelist for dynamically-composed class strings that Tailwind v4 can't scan */
+@source inline("{text,bg}-{red,yellow}-{400,500}{,/10,/15}" "border-{red,yellow}-{500}{/30}" "bg-{red,yellow}-500/15" "text-[#00C49A]" "text-[#60a5fa]" "text-[#a78bfa]" "text-[#555]" "text-[#444]" "text-[#666]" "text-[#888]" "text-[#ccc]" "text-[#333]" "bg-[#0d0d0d]" "bg-[#161616]" "bg-[#1a1a1a]" "bg-[#1e1e1e]" "border-[#1e1e1e]" "border-[#111]" "border-[#333]" "border-[#2a2a2a]" "border-[#00C49A]/30" "border-[#00C49A]/40" "bg-[#00C49A]/10" "bg-[#00C49A]/15" "text-white" "bg-[#333]/50");
+
 :root {
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
