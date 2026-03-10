@@ -37,8 +37,8 @@ export const LineChart = createComponent<LineChartProps>({
             const y = H - (pct / 100) * H;
             return (
               <g>
-                <line x1={0} y1={y} x2={W} y2={y} stroke="#1e1e1e" stroke-width={1} />
-                <text x={4} y={y - 2} font-size={9} fill="#444" font-family="monospace">
+                <line x1={0} y1={y} x2={W} y2={y} style="stroke:#1e1e1e;stroke-width:1" />
+                <text x={4} y={y - 2} style="font-size:9px;fill:#444;font-family:monospace">
                   {String(Math.round((pct / 100) * yMax))}
                 </text>
               </g>
@@ -46,11 +46,7 @@ export const LineChart = createComponent<LineChartProps>({
           })}
           {props.colors.map((color, i) => (
             <polyline
-              fill="none"
-              stroke={color}
-              stroke-width={1.5}
-              stroke-linejoin="round"
-              stroke-linecap="round"
+              style={`fill:none;stroke:${color};stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round`}
               points={() => toPoints(props.data()[i] ?? [], H, yMax)}
             />
           ))}

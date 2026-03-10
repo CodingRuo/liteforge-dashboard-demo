@@ -49,8 +49,8 @@ export const AreaChart = createComponent<AreaChartProps>({
             const y = H - (pct / 100) * H;
             return (
               <g>
-                <line x1={0} y1={y} x2={W} y2={y} stroke="#1e1e1e" stroke-width={1} />
-                <text x={4} y={y - 2} font-size={9} fill="#444" font-family="monospace">
+                <line x1={0} y1={y} x2={W} y2={y} style="stroke:#1e1e1e;stroke-width:1" />
+                <text x={4} y={y - 2} style="font-size:9px;fill:#444;font-family:monospace">
                   {`${Math.round((pct / 100) * yMax)}%`}
                 </text>
               </g>
@@ -59,17 +59,11 @@ export const AreaChart = createComponent<AreaChartProps>({
           {props.colors.map((color, i) => (
             <g>
               <path
-                fill={color}
-                fill-opacity={0.12}
-                stroke="none"
+                style={`fill:${color};fill-opacity:0.12;stroke:none`}
                 d={() => toAreaPath(props.data()[i] ?? [], H, yMax)}
               />
               <path
-                fill="none"
-                stroke={color}
-                stroke-width={1.5}
-                stroke-linejoin="round"
-                stroke-linecap="round"
+                style={`fill:none;stroke:${color};stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round`}
                 d={() => toLinePath(props.data()[i] ?? [], H, yMax)}
               />
             </g>
