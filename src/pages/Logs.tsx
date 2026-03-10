@@ -1,5 +1,6 @@
-import { createComponent, signal, computed } from 'liteforge';
-import { For, Show } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
+import { For, Show } from '@liteforge/runtime';
+import { signal, computed } from '@liteforge/core';
 import { dashboardStore, type LogEntry } from '../store/dashboard.js';
 
 type Filter = 'ALL' | 'WARN' | 'ERROR';

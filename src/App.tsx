@@ -1,4 +1,4 @@
-import { createComponent } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
 import { RouterOutlet } from '@liteforge/router';
 import { Topbar } from './components/Topbar.js';
 

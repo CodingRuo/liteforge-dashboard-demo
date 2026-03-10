@@ -1,4 +1,4 @@
-import { createComponent } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
 
 interface AreaChartProps {
   data: () => number[][];

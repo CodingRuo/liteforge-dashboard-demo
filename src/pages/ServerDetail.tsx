@@ -1,5 +1,5 @@
-import { createComponent } from 'liteforge';
-import { For, Show } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
+import { For, Show } from '@liteforge/runtime';
 import { Link, useParam } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';

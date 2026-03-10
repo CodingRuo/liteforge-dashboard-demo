@@ -1,5 +1,5 @@
-import { createComponent } from 'liteforge';
-import { For } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
+import { For } from '@liteforge/runtime';
 import { NavLink } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { simulation } from '../services/simulation.js';

@@ -1,5 +1,5 @@
-import { createComponent } from 'liteforge';
-import { For } from 'liteforge';
+import { createComponent } from '@liteforge/runtime';
+import { For } from '@liteforge/runtime';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 
 function buildSparkline(vals: number[], color: string): SVGSVGElement {
