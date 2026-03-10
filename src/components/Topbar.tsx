@@ -1,4 +1,5 @@
 import { createComponent } from 'liteforge';
+import { For } from 'liteforge';
 import { NavLink } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { simulation } from '../services/simulation.js';
@@ -42,12 +43,15 @@ export const Topbar = createComponent({
 
         {/* Center: nav */}
         <nav class="flex items-center gap-1">
-          {NAV_ITEMS.map(item => NavLink({
-            href: item.href,
-            class: 'px-3 py-1.5 text-xs font-medium rounded text-[#888] hover:text-white hover:bg-[#1e1e1e] transition-colors',
-            activeClass: 'nav-active',
-            children: item.label,
-          }))}
+          {For({
+            each: NAV_ITEMS,
+            children: (item) => NavLink({
+              href: item.href,
+              class: 'px-3 py-1.5 text-xs font-medium rounded text-[#888] hover:text-white hover:bg-[#1e1e1e] transition-colors',
+              activeClass: 'nav-active',
+              children: item.label,
+            }),
+          })}
         </nav>
 
         {/* Right: live indicator + controls */}
