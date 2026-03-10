@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@liteforge/core": "^0.1.0",
     "@liteforge/router": "^0.8.0",
     "@liteforge/runtime": "0.6.6",
     "@liteforge/store": "^0.1.0",
