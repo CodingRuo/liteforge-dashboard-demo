@@ -2,7 +2,7 @@
 
 A reactive server monitoring dashboard built with [LiteForge](https://liteforge.app) — a signals-based frontend framework with no Virtual DOM.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/SchildW3rk/liteforge-dashboard-demo)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/CodingRuo/liteforge-dashboard-demo)
 
 ---
 
@@ -29,7 +29,7 @@ A **demo/showcase** app that simulates 5 servers producing real-time metrics. It
 ## Run locally
 
 ```bash
-git clone https://github.com/SchildW3rk/liteforge-dashboard-demo
+git clone https://github.com/CodingRuo/liteforge-dashboard-demo
 cd liteforge-dashboard-demo
 npm install
 npm run dev
