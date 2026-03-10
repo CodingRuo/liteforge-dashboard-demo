@@ -1,6 +1,6 @@
 import { createComponent } from 'liteforge';
 import { For } from 'liteforge';
-import { Link } from '@liteforge/router';
+import { getActiveRouter } from '@liteforge/router';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
 import { AreaChart } from '../components/AreaChart.js';
@@ -159,12 +159,11 @@ export const Overview = createComponent({
                     each: () => dashboardStore.servers(),
                     children: (s) => (
                       <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
-                        <td class="px-4 py-3">
-                          {Link({
-                            href: `/servers/${s.id}`,
-                            class: 'text-white hover:text-[#00C49A] transition-colors',
-                            children: () => s.name,
-                          })}
+                        <td
+                          class="px-4 py-3 text-white hover:text-[#00C49A] transition-colors cursor-pointer font-medium"
+                          onclick={() => getActiveRouter()?.navigate(`/servers/${s.id}`)}
+                        >
+                          {s.name}
                         </td>
                         <td class="px-4 py-3">
                           <span class={`inline-flex px-2 py-0.5 rounded-full border text-[10px] ${statusBadge(s.status)}`}>

@@ -92,8 +92,7 @@ export const Topbar = createComponent({
               }`
             }
           >
-            <span>{() => simulating() ? '⏸' : '▶'}</span>
-            <span>{() => simulating() ? 'Pause' : 'Simulate'}</span>
+            {() => simulating() ? 'Pause' : 'Simulate'}
           </button>
         </div>
       </header>
