@@ -104,7 +104,7 @@ export const Logs = createComponent({
                   children: (l) => (
                     <div class={`flex items-start gap-3 px-4 py-1.5 border-b border-[#111] ${levelBg(l.level)}`}>
                       <span class="text-[#333] shrink-0 tabular-nums">
-                        {new Date(l.timestamp).toLocaleTimeString('en-US', {
+                        {new Date(Number(l.timestamp)).toLocaleTimeString('en-US', {
                           hour12: false,
                           hour: '2-digit',
                           minute: '2-digit',

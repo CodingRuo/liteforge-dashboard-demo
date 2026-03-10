@@ -163,7 +163,7 @@ export const Overview = createComponent({
                           {Link({
                             href: `/servers/${s.id}`,
                             class: 'text-white hover:text-[#00C49A] transition-colors',
-                            children: s.name,
+                            children: () => s.name,
                           })}
                         </td>
                         <td class="px-4 py-3">
