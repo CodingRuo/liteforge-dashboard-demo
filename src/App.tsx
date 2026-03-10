@@ -7,8 +7,8 @@ export const App = createComponent({
   component() {
     return (
       <div class="min-h-screen">
-        {Topbar()}
-        {RouterOutlet()}
+        <Topbar />
+        <RouterOutlet />
       </div>
     );
   },

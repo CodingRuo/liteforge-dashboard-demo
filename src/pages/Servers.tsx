@@ -1,7 +1,6 @@
 import { createComponent } from 'liteforge';
 import { For } from 'liteforge';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
-import { getActiveRouter } from '@liteforge/router';
 
 function buildSparkline(vals: number[], color: string): SVGSVGElement {
   const svgNS = 'http://www.w3.org/2000/svg';
@@ -43,10 +42,9 @@ function statusBadge(status: ServerMetrics['status']): string {
 
 export const Servers = createComponent({
   name: 'Servers',
-  component() {
-    function navTo(id: string) {
-      getActiveRouter()?.navigate(`/servers/${id}`);
-    }
+  component({ use }) {
+
+    const router = use('router');
 
     return (
       <div class="pt-12 min-h-screen bg-[#0d0d0d]">
@@ -60,7 +58,7 @@ export const Servers = createComponent({
               each: () => dashboardStore.servers(),
               children: (s) => (
                 <div
-                  onclick={() => navTo(s.id)}
+                  onclick={() => router.navigate(`/servers/${s.id}`)}
                   class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4 hover:border-[#2a2a2a] hover:bg-[#1a1a1a] transition-colors cursor-pointer"
                 >
                   <div class="flex items-center justify-between mb-3">
