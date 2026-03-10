@@ -25,6 +25,12 @@ body {
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #444; }
 
+/* Nav active state (single token for classList compat) */
+.nav-active {
+  color: white;
+  background-color: #1e1e1e;
+}
+
 /* Pulsing dot animation */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }

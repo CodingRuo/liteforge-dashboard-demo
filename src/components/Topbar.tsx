@@ -45,7 +45,7 @@ export const Topbar = createComponent({
           {NAV_ITEMS.map(item => NavLink({
             href: item.href,
             class: 'px-3 py-1.5 text-xs font-medium rounded text-[#888] hover:text-white hover:bg-[#1e1e1e] transition-colors',
-            activeClass: 'text-white bg-[#1e1e1e]',
+            activeClass: 'nav-active',
             children: item.label,
           }))}
         </nav>
