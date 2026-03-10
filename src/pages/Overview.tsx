@@ -53,6 +53,12 @@ function formatUptime(seconds: number): string {
 export const Overview = createComponent({
   name: 'Overview',
   component() {
+    // DEBUG
+    console.log('globalRequests:', dashboardStore.globalRequests());
+    console.log('simulating:', dashboardStore.simulating());
+    setTimeout(() => {
+      console.log('globalRequests after 2s:', dashboardStore.globalRequests());
+    }, 2000);
     return (
       <div class="pt-12 min-h-screen bg-[#0d0d0d]">
         <div class="p-4 space-y-4">

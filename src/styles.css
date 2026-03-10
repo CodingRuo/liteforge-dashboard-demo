@@ -1,44 +1,16 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 @import "tailwindcss";
 
-/* Safelist for dynamically-composed class strings that Tailwind v4 can't scan */
-@source inline("{text,bg}-{red,yellow}-{400,500}{,/10,/15}" "border-{red,yellow}-{500}{/30}" "bg-{red,yellow}-500/15" "text-[#00C49A]" "text-[#60a5fa]" "text-[#a78bfa]" "text-[#555]" "text-[#444]" "text-[#666]" "text-[#888]" "text-[#ccc]" "text-[#333]" "bg-[#0d0d0d]" "bg-[#161616]" "bg-[#1a1a1a]" "bg-[#1e1e1e]" "border-[#1e1e1e]" "border-[#111]" "border-[#333]" "border-[#2a2a2a]" "border-[#00C49A]/30" "border-[#00C49A]/40" "bg-[#00C49A]/10" "bg-[#00C49A]/15" "text-white" "bg-[#333]/50");
-
-:root {
-  color-scheme: dark;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  min-height: 100vh;
-  background: #0d0d0d;
-  color: #e2e8f0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #161616; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #444; }
-
-/* Nav active state (single token for classList compat) */
-.nav-active {
-  color: white;
-  background-color: #1e1e1e;
-}
-
-/* Pulsing dot animation */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
 }
 .pulse-dot {
   animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.nav-active {
+  color: white;
+  background-color: #1e1e1e;
 }

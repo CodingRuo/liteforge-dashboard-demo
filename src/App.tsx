@@ -6,7 +6,7 @@ export const App = createComponent({
   name: 'App',
   component() {
     return (
-      <div class="min-h-screen bg-[#0d0d0d]">
+      <div class="min-h-screen p-4">
         {Topbar()}
         {RouterOutlet()}
       </div>
