@@ -1,7 +1,14 @@
-import { createComponent, signal } from 'liteforge';
+import { createComponent, signal, computed } from 'liteforge';
+import { For, Show } from 'liteforge';
 import { dashboardStore, type LogEntry } from '../store/dashboard.js';
 
 type Filter = 'ALL' | 'WARN' | 'ERROR';
+
+const FILTER_OPTS: { value: Filter; label: string }[] = [
+  { value: 'ALL',   label: 'ALL' },
+  { value: 'WARN',  label: 'WARN' },
+  { value: 'ERROR', label: 'ERROR' },
+];
 
 function levelColor(level: LogEntry['level']): string {
   switch (level) {
@@ -19,11 +26,25 @@ function levelBg(level: LogEntry['level']): string {
   }
 }
 
+function msgColor(level: LogEntry['level']): string {
+  switch (level) {
+    case 'ERROR': return 'text-red-300';
+    case 'WARN':  return 'text-yellow-200/80';
+    case 'INFO':  return 'text-[#666]';
+  }
+}
+
 export const Logs = createComponent({
   name: 'Logs',
   component() {
     const filter = signal<Filter>('ALL');
     const autoScroll = signal(true);
+
+    const filteredEntries = computed(() =>
+      filter() === 'ALL'
+        ? dashboardStore.logs()
+        : dashboardStore.logs().filter(l => l.level === filter())
+    );
 
     return (
       <div class="pt-12 min-h-screen bg-[#0d0d0d]">
@@ -32,31 +53,28 @@ export const Logs = createComponent({
           {/* Controls */}
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              {(['ALL', 'WARN', 'ERROR'] as Filter[]).map(f => (
-                <button
-                  onclick={() => filter.set(f)}
-                  class={() => `px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
-                    filter() === f
-                      ? f === 'ERROR' ? 'bg-red-500/15 border-red-500/30 text-red-400' :
-                        f === 'WARN'  ? 'bg-yellow-500/15 border-yellow-500/30 text-yellow-400' :
-                        'bg-[#1e1e1e] border-[#333] text-white'
-                      : 'border-transparent text-[#555] hover:text-[#888]'
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
+              {For({
+                each: FILTER_OPTS,
+                children: (opt) => (
+                  <button
+                    onclick={() => filter.set(opt.value)}
+                    class={() => `px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
+                      filter() === opt.value
+                        ? opt.value === 'ERROR' ? 'bg-red-500/15 border-red-500/30 text-red-400'
+                        : opt.value === 'WARN'  ? 'bg-yellow-500/15 border-yellow-500/30 text-yellow-400'
+                        : 'bg-[#1e1e1e] border-[#333] text-white'
+                        : 'border-transparent text-[#555] hover:text-[#888]'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ),
+              })}
             </div>
 
             <div class="flex items-center gap-3">
               <div class="text-xs font-mono text-[#444]">
-                {() => {
-                  const total = dashboardStore.logs().length;
-                  const filtered = dashboardStore.logs().filter(l =>
-                    filter() === 'ALL' || l.level === filter()
-                  ).length;
-                  return `${filtered} / ${total} entries`;
-                }}
+                {() => `${filteredEntries().length} / ${dashboardStore.logs().length} entries`}
               </div>
               <button
                 onclick={() => autoScroll.update(v => !v)}
@@ -74,37 +92,34 @@ export const Logs = createComponent({
           {/* Log stream */}
           <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg overflow-hidden">
             <div class="h-[calc(100vh-12rem)] overflow-y-auto font-mono text-xs">
-              {() => {
-                const entries = dashboardStore.logs().filter(l =>
-                  filter() === 'ALL' || l.level === filter()
-                );
-                if (entries.length === 0) {
-                  return (
-                    <div class="flex items-center justify-center h-full text-[#444]">
-                      Waiting for log entries…
-                    </div>
-                  );
-                }
-                return entries.map(l => (
-                  <div class={`flex items-start gap-3 px-4 py-1.5 border-b border-[#111] ${levelBg(l.level)}`}>
-                    <span class="text-[#333] shrink-0 tabular-nums">
-                      {new Date(l.timestamp).toLocaleTimeString('en-US', {
-                        hour12: false,
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      })}
-                    </span>
-                    <span class={`w-10 shrink-0 font-bold ${levelColor(l.level)}`}>
-                      {l.level}
-                    </span>
-                    <span class="text-[#555] shrink-0 w-20 truncate">{l.server}</span>
-                    <span class={l.level === 'ERROR' ? 'text-red-300' : l.level === 'WARN' ? 'text-yellow-200/80' : 'text-[#666]'}>
-                      {l.message}
-                    </span>
+              {Show({
+                when: () => filteredEntries().length === 0,
+                children: () => (
+                  <div class="flex items-center justify-center h-full text-[#444]">
+                    Waiting for log entries…
                   </div>
-                ));
-              }}
+                ),
+                fallback: () => For({
+                  each: filteredEntries,
+                  children: (l) => (
+                    <div class={`flex items-start gap-3 px-4 py-1.5 border-b border-[#111] ${levelBg(l.level)}`}>
+                      <span class="text-[#333] shrink-0 tabular-nums">
+                        {new Date(l.timestamp).toLocaleTimeString('en-US', {
+                          hour12: false,
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                        })}
+                      </span>
+                      <span class={`w-10 shrink-0 font-bold ${levelColor(l.level)}`}>
+                        {l.level}
+                      </span>
+                      <span class="text-[#555] shrink-0 w-20 truncate">{l.server}</span>
+                      <span class={msgColor(l.level)}>{l.message}</span>
+                    </div>
+                  ),
+                }),
+              })}
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import { createComponent } from 'liteforge';
+import { For, Show } from 'liteforge';
 import { Link, useParam } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
@@ -11,6 +12,8 @@ const PROCESSES = [
   { name: 'redis',    pid: 1201, cpu: () => Math.random() * 3 + 0.3,mem: () => Math.random() * 2 + 0.5 },
   { name: 'sshd',     pid: 888,  cpu: () => Math.random() * 0.5,    mem: () => Math.random() * 0.3 },
 ];
+
+const PROC_COLS = ['PID', 'Name', 'CPU %', 'MEM %'];
 
 function statusColor(status: string): string {
   if (status === 'critical') return 'text-red-400';
@@ -35,9 +38,7 @@ export const ServerDetail = createComponent({
 
           {/* Back + header */}
           <div class="flex items-center gap-4">
-            <Link href="/overview" class="text-xs font-mono text-[#555] hover:text-white transition-colors">
-              ← Back to Overview
-            </Link>
+            {Link({ href: '/overview', class: 'text-xs font-mono text-[#555] hover:text-white transition-colors', children: '← Back to Overview' })}
           </div>
 
           {() => {
@@ -151,20 +152,26 @@ export const ServerDetail = createComponent({
                   <table class="w-full text-xs font-mono">
                     <thead>
                       <tr class="border-b border-[#1e1e1e]">
-                        {['PID', 'Name', 'CPU %', 'MEM %'].map(h => (
-                          <th class="text-left px-4 py-2 text-[#444] font-normal">{h}</th>
-                        ))}
+                        {For({
+                          each: PROC_COLS,
+                          children: (col) => (
+                            <th class="text-left px-4 py-2 text-[#444] font-normal">{col}</th>
+                          ),
+                        })}
                       </tr>
                     </thead>
                     <tbody>
-                      {PROCESSES.map(p => (
-                        <tr class="border-b border-[#111]">
-                          <td class="px-4 py-2.5 text-[#444]">{p.pid}</td>
-                          <td class="px-4 py-2.5 text-white">{p.name}</td>
-                          <td class="px-4 py-2.5 text-[#00C49A]">{() => p.cpu().toFixed(1)}</td>
-                          <td class="px-4 py-2.5 text-[#60a5fa]">{() => p.mem().toFixed(1)}</td>
-                        </tr>
-                      ))}
+                      {For({
+                        each: PROCESSES,
+                        children: (p) => (
+                          <tr class="border-b border-[#111]">
+                            <td class="px-4 py-2.5 text-[#444]">{p.pid}</td>
+                            <td class="px-4 py-2.5 text-white">{p.name}</td>
+                            <td class="px-4 py-2.5 text-[#00C49A]">{() => p.cpu().toFixed(1)}</td>
+                            <td class="px-4 py-2.5 text-[#60a5fa]">{() => p.mem().toFixed(1)}</td>
+                          </tr>
+                        ),
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -181,20 +188,26 @@ export const ServerDetail = createComponent({
                       const alerts = dashboardStore.logs()
                         .filter(l => l.server === server.name && l.level !== 'INFO')
                         .slice(0, 10);
-                      if (alerts.length === 0) {
-                        return <div class="px-4 py-6 text-center text-[#444] text-xs font-mono">No alerts</div>;
-                      }
-                      return alerts.map(l => (
-                        <div class="px-4 py-2.5 flex items-start gap-3 font-mono text-xs">
-                          <span class={`shrink-0 ${l.level === 'ERROR' ? 'text-red-400' : 'text-yellow-400'}`}>
-                            {l.level}
-                          </span>
-                          <span class="text-[#888] shrink-0">
-                            {new Date(l.timestamp).toLocaleTimeString()}
-                          </span>
-                          <span class="text-[#ccc]">{l.message}</span>
-                        </div>
-                      ));
+                      return Show({
+                        when: () => alerts.length === 0,
+                        children: () => (
+                          <div class="px-4 py-6 text-center text-[#444] text-xs font-mono">No alerts</div>
+                        ),
+                        fallback: () => For({
+                          each: alerts,
+                          children: (l) => (
+                            <div class="px-4 py-2.5 flex items-start gap-3 font-mono text-xs">
+                              <span class={`shrink-0 ${l.level === 'ERROR' ? 'text-red-400' : 'text-yellow-400'}`}>
+                                {l.level}
+                              </span>
+                              <span class="text-[#888] shrink-0">
+                                {new Date(l.timestamp).toLocaleTimeString()}
+                              </span>
+                              <span class="text-[#ccc]">{l.message}</span>
+                            </div>
+                          ),
+                        }),
+                      });
                     }}
                   </div>
                 </div>

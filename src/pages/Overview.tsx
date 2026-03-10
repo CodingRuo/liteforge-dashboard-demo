@@ -1,10 +1,15 @@
 import { createComponent } from 'liteforge';
+import { For } from 'liteforge';
 import { Link } from '@liteforge/router';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
 import { AreaChart } from '../components/AreaChart.js';
 
 const SERVER_COLORS = ['#00C49A', '#60a5fa', '#f59e0b', '#a78bfa', '#f472b6'];
+
+const TABLE_COLS = [
+  'Server', 'Status', 'CPU %', 'RAM %', 'Req/s', 'Err %', 'RT ms', 'Uptime', 'Region',
+];
 
 function statusBadge(status: ServerMetrics['status']): string {
   switch (status) {
@@ -55,11 +60,8 @@ export const Overview = createComponent({
           {/* KPI Cards */}
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
 
-            {/* Requests/sec */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">
-                Requests / sec
-              </div>
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">Requests / sec</div>
               <div class={() => `text-2xl font-mono font-bold ${
                 dashboardStore.globalRequests() > 800 ? 'text-red-400' :
                 dashboardStore.globalRequests() > 400 ? 'text-yellow-400' : 'text-[#00C49A]'
@@ -69,11 +71,8 @@ export const Overview = createComponent({
               <div class="text-[10px] text-[#444] mt-1 font-mono">total across all servers</div>
             </div>
 
-            {/* Error Rate */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">
-                Error Rate
-              </div>
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">Error Rate</div>
               <div class={() => `text-2xl font-mono font-bold ${
                 dashboardStore.globalErrorRate() > 3 ? 'text-red-400' :
                 dashboardStore.globalErrorRate() > 1 ? 'text-yellow-400' : 'text-[#00C49A]'
@@ -83,11 +82,8 @@ export const Overview = createComponent({
               <div class="text-[10px] text-[#444] mt-1 font-mono">avg across all servers</div>
             </div>
 
-            {/* Avg Response Time */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">
-                Avg Response Time
-              </div>
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">Avg Response Time</div>
               <div class={() => `text-2xl font-mono font-bold ${
                 dashboardStore.globalResponseTime() > 300 ? 'text-red-400' :
                 dashboardStore.globalResponseTime() > 200 ? 'text-yellow-400' : 'text-[#00C49A]'
@@ -97,11 +93,8 @@ export const Overview = createComponent({
               <div class="text-[10px] text-[#444] mt-1 font-mono">p50 latency</div>
             </div>
 
-            {/* Active Connections */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">
-                Active Connections
-              </div>
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#555] mb-2">Active Connections</div>
               <div class="text-2xl font-mono font-bold text-[#a78bfa]">
                 {() => dashboardStore.globalConnections()}
               </div>
@@ -111,8 +104,6 @@ export const Overview = createComponent({
 
           {/* Charts row */}
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-
-            {/* CPU Line Chart */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
               <div class="text-[11px] font-mono uppercase tracking-wider text-[#555] mb-3">
                 CPU Usage — last 60 ticks
@@ -126,7 +117,6 @@ export const Overview = createComponent({
               />
             </div>
 
-            {/* RAM Area Chart */}
             <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg p-4">
               <div class="text-[11px] font-mono uppercase tracking-wider text-[#555] mb-3">
                 RAM Usage — last 60 ticks
@@ -144,41 +134,47 @@ export const Overview = createComponent({
           {/* Server Table */}
           <div class="bg-[#161616] border border-[#1e1e1e] rounded-lg overflow-hidden">
             <div class="px-4 py-3 border-b border-[#1e1e1e]">
-              <span class="text-[11px] font-mono uppercase tracking-wider text-[#555]">
-                Servers
-              </span>
+              <span class="text-[11px] font-mono uppercase tracking-wider text-[#555]">Servers</span>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full text-xs font-mono">
                 <thead>
                   <tr class="border-b border-[#1e1e1e]">
-                    {['Server', 'Status', 'CPU %', 'RAM %', 'Req/s', 'Err %', 'RT ms', 'Uptime', 'Region'].map(h => (
-                      <th class="text-left px-4 py-2 text-[#444] font-normal">{h}</th>
-                    ))}
+                    {For({
+                      each: TABLE_COLS,
+                      children: (col) => (
+                        <th class="text-left px-4 py-2 text-[#444] font-normal">{col}</th>
+                      ),
+                    })}
                   </tr>
                 </thead>
                 <tbody>
-                  {() => dashboardStore.servers().map(s => (
-                    <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
-                      <td class="px-4 py-3">
-                        <Link href={`/servers/${s.id}`} class="text-white hover:text-[#00C49A] transition-colors">
-                          {s.name}
-                        </Link>
-                      </td>
-                      <td class="px-4 py-3">
-                        <span class={`inline-flex px-2 py-0.5 rounded-full border text-[10px] ${statusBadge(s.status)}`}>
-                          {s.status}
-                        </span>
-                      </td>
-                      <td class={`px-4 py-3 ${cpuColor(s.cpu)}`}>{s.cpu.toFixed(1)}</td>
-                      <td class={`px-4 py-3 ${ramColor(s.ram)}`}>{s.ram.toFixed(1)}</td>
-                      <td class="px-4 py-3 text-[#888]">{s.requests.toFixed(0)}</td>
-                      <td class={`px-4 py-3 ${errColor(s.errorRate)}`}>{s.errorRate.toFixed(2)}</td>
-                      <td class={`px-4 py-3 ${rtColor(s.responseTime)}`}>{s.responseTime.toFixed(0)}</td>
-                      <td class="px-4 py-3 text-[#555]">{formatUptime(s.uptime)}</td>
-                      <td class="px-4 py-3 text-[#555]">{s.region}</td>
-                    </tr>
-                  ))}
+                  {For({
+                    each: () => dashboardStore.servers(),
+                    children: (s) => (
+                      <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
+                        <td class="px-4 py-3">
+                          {Link({
+                            href: `/servers/${s.id}`,
+                            class: 'text-white hover:text-[#00C49A] transition-colors',
+                            children: s.name,
+                          })}
+                        </td>
+                        <td class="px-4 py-3">
+                          <span class={`inline-flex px-2 py-0.5 rounded-full border text-[10px] ${statusBadge(s.status)}`}>
+                            {s.status}
+                          </span>
+                        </td>
+                        <td class={`px-4 py-3 ${cpuColor(s.cpu)}`}>{s.cpu.toFixed(1)}</td>
+                        <td class={`px-4 py-3 ${ramColor(s.ram)}`}>{s.ram.toFixed(1)}</td>
+                        <td class="px-4 py-3 text-[#888]">{s.requests.toFixed(0)}</td>
+                        <td class={`px-4 py-3 ${errColor(s.errorRate)}`}>{s.errorRate.toFixed(2)}</td>
+                        <td class={`px-4 py-3 ${rtColor(s.responseTime)}`}>{s.responseTime.toFixed(0)}</td>
+                        <td class="px-4 py-3 text-[#555]">{formatUptime(s.uptime)}</td>
+                        <td class="px-4 py-3 text-[#555]">{s.region}</td>
+                      </tr>
+                    ),
+                  })}
                 </tbody>
               </table>
             </div>
