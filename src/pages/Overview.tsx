@@ -1,4 +1,4 @@
-import { createComponent, use } from 'liteforge';
+import { createComponent } from 'liteforge';
 import { For } from 'liteforge';
 import type { Router } from '@liteforge/router';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
