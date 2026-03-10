@@ -21,8 +21,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@liteforge/core@0.1.0)(@liteforge/runtime@0.6.5(@liteforge/core@0.1.0))
       '@liteforge/vite-plugin':
-        specifier: ^0.4.4
-        version: 0.4.4(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))
+        specifier: ^0.4.5
+        version: 0.4.5(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))
       liteforge:
         specifier: ^0.7.2
         version: 0.7.2
@@ -322,8 +322,8 @@ packages:
       '@liteforge/runtime':
         optional: true
 
-  '@liteforge/vite-plugin@0.4.4':
-    resolution: {integrity: sha512-WG7yMD5PvFhq6uj3FRHhp/pjdhwfvwWTMg3oHEVAk3abxUUsS3k/6UFMEyN3dtSbvSpmOQmRAVve1nyqT96iDQ==}
+  '@liteforge/vite-plugin@0.4.5':
+    resolution: {integrity: sha512-MJ1Hku98lNdcBbgn4n6giIXWvzVq0VGFgG4D06/m4ng7GoxZrb0y0uoiA56yaZGilYdEDiTjpNlmMR3uaLxEXQ==}
     engines: {node: '>=18'}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -1035,7 +1035,7 @@ snapshots:
     optionalDependencies:
       '@liteforge/runtime': 0.6.5(@liteforge/core@0.1.0)
 
-  '@liteforge/vite-plugin@0.4.4(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))':
+  '@liteforge/vite-plugin@0.4.5(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/generator': 7.29.1
