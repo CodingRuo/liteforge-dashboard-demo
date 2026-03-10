@@ -3,6 +3,31 @@ import { For } from 'liteforge';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 import { getActiveRouter } from '@liteforge/router';
 
+function buildSparkline(vals: number[], color: string): SVGSVGElement {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', '0 0 120 24');
+  svg.style.width = '100%';
+  svg.style.height = '24px';
+  svg.setAttribute('preserveAspectRatio', 'none');
+  if (vals.length >= 2) {
+    const pts = vals.map((v, i) => {
+      const x = (i / (vals.length - 1)) * 120;
+      const y = 24 - (v / 100) * 22;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    const poly = document.createElementNS(svgNS, 'polyline');
+    poly.setAttribute('points', pts);
+    poly.setAttribute('fill', 'none');
+    poly.setAttribute('stroke', color);
+    poly.setAttribute('stroke-width', '1.5');
+    poly.setAttribute('stroke-linejoin', 'round');
+    poly.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(poly);
+  }
+  return svg;
+}
+
 const SERVER_COLORS: Record<string, string> = {
   s1: '#00C49A', s2: '#60a5fa', s3: '#f59e0b', s4: '#a78bfa', s5: '#f472b6',
 };
@@ -72,31 +97,7 @@ export const Servers = createComponent({
 
                   {/* Mini sparkline */}
                   <div class="mt-1 h-6">
-                    {() => {
-                      const svgNS = 'http://www.w3.org/2000/svg';
-                      const svg = document.createElementNS(svgNS, 'svg');
-                      svg.setAttribute('viewBox', '0 0 120 24');
-                      svg.style.width = '100%';
-                      svg.style.height = '24px';
-                      svg.setAttribute('preserveAspectRatio', 'none');
-                      const vals = s.cpuHistory;
-                      if (vals.length >= 2) {
-                        const pts = vals.map((v, i) => {
-                          const x = (i / (vals.length - 1)) * 120;
-                          const y = 24 - (v / 100) * 22;
-                          return `${x.toFixed(1)},${y.toFixed(1)}`;
-                        }).join(' ');
-                        const poly = document.createElementNS(svgNS, 'polyline');
-                        poly.setAttribute('points', pts);
-                        poly.setAttribute('fill', 'none');
-                        poly.setAttribute('stroke', SERVER_COLORS[s.id] ?? '#00C49A');
-                        poly.setAttribute('stroke-width', '1.5');
-                        poly.setAttribute('stroke-linejoin', 'round');
-                        poly.setAttribute('stroke-linecap', 'round');
-                        svg.appendChild(poly);
-                      }
-                      return svg;
-                    }}
+                    {buildSparkline(s.cpuHistory, SERVER_COLORS[s.id] ?? '#00C49A')}
                   </div>
 
                   <div class="mt-2 text-[10px] font-mono text-[#444]">{s.region} · {s.id}</div>
