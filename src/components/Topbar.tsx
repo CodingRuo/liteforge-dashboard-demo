@@ -1,5 +1,4 @@
 import { createComponent } from 'liteforge';
-import { For } from 'liteforge';
 import { NavLink } from '@liteforge/router';
 import { dashboardStore } from '../store/dashboard.js';
 import { simulation } from '../services/simulation.js';
@@ -10,10 +9,10 @@ const NAV_ITEMS = [
   { label: 'Logs',     href: '/logs' },
 ] as const;
 
-const INTERVALS = [
-  { value: 1000 as const, label: '1s' },
-  { value: 500  as const, label: '500ms' },
-  { value: 250  as const, label: '250ms' },
+const INTERVALS: { value: 1000 | 500 | 250; label: string }[] = [
+  { value: 1000, label: '1s' },
+  { value: 500,  label: '500ms' },
+  { value: 250,  label: '250ms' },
 ];
 
 export const Topbar = createComponent({
@@ -43,15 +42,12 @@ export const Topbar = createComponent({
 
         {/* Center: nav */}
         <nav class="flex items-center gap-1">
-          {For({
-            each: NAV_ITEMS,
-            children: (item) => NavLink({
-              href: item.href,
-              class: 'px-3 py-1.5 text-xs font-medium rounded text-[#888] hover:text-white hover:bg-[#1e1e1e] transition-colors',
-              activeClass: 'text-white bg-[#1e1e1e]',
-              children: item.label,
-            }),
-          })}
+          {NAV_ITEMS.map(item => NavLink({
+            href: item.href,
+            class: 'px-3 py-1.5 text-xs font-medium rounded text-[#888] hover:text-white hover:bg-[#1e1e1e] transition-colors',
+            activeClass: 'text-white bg-[#1e1e1e]',
+            children: item.label,
+          }))}
         </nav>
 
         {/* Right: live indicator + controls */}
@@ -66,25 +62,22 @@ export const Topbar = createComponent({
 
           {/* Interval selector */}
           <div class="flex items-center gap-0.5 text-xs font-mono">
-            {For({
-              each: INTERVALS,
-              children: (item) => {
-                const v = item.value;
-                return (
-                  <button
-                    onclick={() => setIntervalVal(v)}
-                    class={() =>
-                      `px-2 py-1 rounded border transition-colors ${
-                        interval() === v
-                          ? 'bg-[#1e1e1e] border-[#333] text-white'
-                          : 'border-transparent text-[#666] hover:text-[#999]'
-                      }`
-                    }
-                  >
-                    {item.label}
-                  </button>
-                );
-              },
+            {INTERVALS.map(item => {
+              const v = item.value;
+              return (
+                <button
+                  onclick={() => setIntervalVal(v)}
+                  class={() =>
+                    `px-2 py-1 rounded border transition-colors ${
+                      interval() === v
+                        ? 'bg-[#1e1e1e] border-[#333] text-white'
+                        : 'border-transparent text-[#666] hover:text-[#999]'
+                    }`
+                  }
+                >
+                  {item.label}
+                </button>
+              );
             })}
           </div>
 
