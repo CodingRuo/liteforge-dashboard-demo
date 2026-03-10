@@ -1,6 +1,6 @@
 import { createComponent } from 'liteforge';
 import { For } from 'liteforge';
-import { getActiveRouter } from '@liteforge/router';
+import { getActiveRouterOrNull } from '@liteforge/router';
 import { dashboardStore, type ServerMetrics } from '../store/dashboard.js';
 import { LineChart } from '../components/LineChart.js';
 import { AreaChart } from '../components/AreaChart.js';
@@ -161,7 +161,7 @@ export const Overview = createComponent({
                       <tr class="border-b border-[#111] hover:bg-[#1a1a1a] transition-colors cursor-pointer">
                         <td
                           class="px-4 py-3 text-white hover:text-[#00C49A] transition-colors cursor-pointer font-medium"
-                          onclick={() => getActiveRouter()?.navigate(`/servers/${s.id}`)}
+                          onclick={() => getActiveRouterOrNull()?.navigate(`/servers/${s.id}`)}
                         >
                           {s.name}
                         </td>
